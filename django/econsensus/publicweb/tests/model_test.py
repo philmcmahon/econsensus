@@ -69,6 +69,11 @@ class ModelTest(DecisionTestCase):
         feedback = Feedback(description="Feedback test data", decision=decision)
         self.model_has_attribute(feedback, "author")
 
+    def test_get_author_name(self):
+        decision = self.make_decision()
+        feedback = Feedback(description="Feedback test data", decision=decision, author=self.betty)
+        self.assertEqual(Feedback.get_author_name(feedback), "betty")
+
     def test_decision_has_meeting_people(self):
         decision = self.make_decision()
         self.model_has_attribute(decision, "meeting_people")
