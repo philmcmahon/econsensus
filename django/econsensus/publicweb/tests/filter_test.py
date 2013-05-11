@@ -1,0 +1,15 @@
+from open_consent_test_case import EconsensusTestCase
+
+from publicweb.templatetags import publicweb_filters
+from django.contrib.comments.models import Comment
+
+# test custom template filters
+class FilterTest(EconsensusTestCase):
+    
+    def test_get_user_name_from_comment(self):
+        c = Comment()
+        c.user = self.betty
+        self.assertEqual(publicweb_filters.get_user_name_from_comment(c), "betty")
+        c = Comment()
+        c.user_name = "Harry"
+        self.assertEqual(publicweb_filters.get_user_name_from_comment(c), "Harry")

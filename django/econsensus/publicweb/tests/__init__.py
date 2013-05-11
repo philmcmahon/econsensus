@@ -19,3 +19,4 @@ from command_test import CommandTest
 from organization_test import OrganizationTest
 from management_command_user_data_test import UserDataCommandTest
 from management_command_site_data_test import SiteDataCommandTest
+from filter_test import FilterTest
