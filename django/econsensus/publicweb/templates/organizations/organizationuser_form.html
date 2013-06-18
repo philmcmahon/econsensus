@@ -31,7 +31,7 @@ If they already have an account they will be able to use your <br />organization
 </p>
 {% else %}
 <p>
-Change user persmissions below 
+Change user permissions below 
 </p>
 {% endif %}
 <br />
@@ -46,14 +46,9 @@ Change user persmissions below
     </div>
     {% endif %}
     <div class="fieldWrapper">
-    	{{ form.is_admin.errors }}
-    	<label for="id_email">Is Admin:</label>
-    	{{ form.is_admin }}
-    </div>
-    <div class="fieldWrapper">
-    	{{ form.is_editor.errors }}
-    	<label for="id_email">Is Editor:</label>
-    	{{ form.is_editor }}
+        
+        <label for="id_email">User Type:</label>
+       {{ form.user_type }}
     </div>        
 <br />
     <input type="submit" value="OK" style="float:left;margin:0 0.5em">

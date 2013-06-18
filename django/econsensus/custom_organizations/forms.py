@@ -42,22 +42,35 @@ class CustomOrganizationAddForm(CustomOrganizationForm):
         return organization
 
 class CustomOrganizationUserForm(OrganizationUserForm):
-    is_editor = forms.BooleanField(required=False)
+    USER_TYPES = (
+        ('1', "Normal User"),
+        ('2', "Admin (can edit and invite users)"),
+        ('3', "Observer Only (can't add or edit information)"),
+    )
+    user_type = forms.ChoiceField(required=True, choices=USER_TYPES)
 
     def save(self, commit=True):
-        if self.cleaned_data['is_editor']:
+        self.instance.is_admin = (self.cleaned_data['user_type'] == '2')
+        if self.cleaned_data['user_type'] != '3':
             assign('edit_decisions_feedback', self.instance.user, self.instance.organization)
         else:
             remove_perm('edit_decisions_feedback', self.instance.user, self.instance.organization)
         return super(CustomOrganizationUserForm, self).save(commit=commit)
 
 class CustomOrganizationUserAddForm(OrganizationUserAddForm):
-    is_editor = forms.BooleanField(required=False, initial=True)
+    USER_TYPES = (
+        ('1', "Normal User"),
+        ('2', "Admin (can edit and invite users)"),
+        ('3', "Observer Only (can't add or edit information)"),
+    )
+    user_type = forms.ChoiceField(required=True, choices=USER_TYPES)
 
     def save(self, commit=True):
+        self.cleaned_data['is_admin'] = (self.cleaned_data['user_type'] == '2')
         self.instance = super(CustomOrganizationUserAddForm, self).save(commit=commit)
-        if self.cleaned_data['is_editor']:
+        if self.cleaned_data['user_type'] != '3':
             assign('edit_decisions_feedback', self.instance.user, self.instance.organization)
         else:
             remove_perm('edit_decisions_feedback', self.instance.user, self.instance.organization)
+        print self.instance.is_admin
         return self.instance
