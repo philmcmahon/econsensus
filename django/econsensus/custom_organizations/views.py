@@ -57,7 +57,7 @@ class CustomOrganizationUserUpdate(OrganizationUserUpdate):
     def get_initial(self):
         super(CustomOrganizationUserUpdate, self).get_initial()
         is_editor = self.object.user.has_perm('edit_decisions_feedback', self.object.organization)
-        self.initial = {"is_editor": is_editor}
+        self.initial = {"user_type" : (('observer', 'editor')[is_editor], 'admin')[self.object.is_admin] }
         return self.initial
 
 class CustomOrganizationUserCreate(OrganizationUserCreate):
