@@ -2,6 +2,7 @@
 {% load url from future %}
 {% load i18n %}
 {% load org_tags %}
+{% load publicweb_filters %}
 
 {% block title %}
 {{ organization }}'s members
@@ -25,6 +26,7 @@
     <td>{{ organization_user.user.first_name }}</td> 
     <td>{{ organization_user.user.last_name }}</td> 
     <td>{{ organization_user.user.email }}</td> 
+    <td>{{ organization|get_user_permissions:organization_user }}</td>
     <td><a href="{% url 'organization_user_edit' organization.id organization_user.user.id %}">edit</a> | <a href="{% url 'organization_user_delete' organization.id organization_user.user.id %}">delete</a></td>
 </tr>
 
